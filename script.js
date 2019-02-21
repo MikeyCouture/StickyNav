@@ -1,6 +1,8 @@
 const triggers = document.querySelectorAll(".mainList > li");
 const background = document.querySelector(".dropdownBackground");
 const nav = document.querySelector('.top');
+const topOfNav = nav.offsetTop;
+console.log(topOfNav);
 
 function handleEnter(){
     this.classList.add("trigger-enter");
@@ -35,7 +37,19 @@ function handleLeave(){
     background.classList.remove("open");
 }
 
+function fixNav(){
+    if (window.scrollY >= topOfNav){
+        document.body.style.paddingTop = nav.offsetHeight + "px";
+        document.body.classList.add("fixed-nav");
+        // main.style.setProperty("paddingTop", "64px");
+    } else{
+        document.body.style.paddingTop = 0;
+        document.body.classList.remove("fixed-nav");
+    }
+}
+
 
 
 triggers.forEach(trigger => trigger.addEventListener("mouseenter", handleEnter));
 triggers.forEach(trigger => trigger.addEventListener("mouseleave", handleLeave));
+window.addEventListener("scroll", fixNav);
